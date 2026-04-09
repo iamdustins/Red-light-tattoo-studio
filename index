@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Red Light Tattoo Studio | San Marcos, TX — Open Late</title>
+<meta name="description" content="Red Light Tattoo Studio in San Marcos, TX. Walk-ins welcome. Appointments recommended. Fine line, black & gray, color, and bold blackwork by resident artists. 109 E. Hopkins St., Suite 206.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Oswald:wght@300;400;500;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ===== DESIGN TOKENS ===== */
+  :root {
+    --black:       #080707;
+    --charcoal:    #110e0e;
+    --graphite:    #181414;
+    --smoke:       #241d1d;
+    --crimson:     #8b1a1a;
+    --oxblood:     #4a0c0c;
+    --red-glow:    #b32d20;
+    --ember:       #d93d26;
+    --bone:        #eae4db;
+    --warm-white:  #f8f5f0;
+    --muted:       #a39994;
+    
+    /* Softened glass and border tokens for an architectural feel */
+    --glass:       rgba(24, 20, 20, 0.85);
+    --border:      rgba(139, 26, 26, 0.15);
+    --border-soft: rgba(234, 228, 219, 0.05);
+
+    --font-display: 'Oswald', sans-serif;
+    --font-serif:   'Cormorant Garamond', Georgia, serif;
+    --font-mono:    'DM Mono', monospace;
+  }
+
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--bone);
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+    cursor: default;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection { background: var(--crimson); color: var(--bone); }
+
+  /* ===== NOISE TEXTURE OVERLAY ===== */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* ===== SCROLLBAR ===== */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--crimson); }
+
+  /* ===== UTILITY ===== */
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 32px; }
+  .label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red-glow);
+    opacity: 0.9;
+  }
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: linear-gradient(to right, var(--crimson), transparent);
+    margin: 18px 0 32px;
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes glowPulse {
+    0%, 100% { text-shadow: 0 0 12px rgba(179,45,32,0.2); }
+    50%      { text-shadow: 0 0 24px rgba(179,45,32,0.4), 0 0 48px rgba(179,45,32,0.1); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 500;
+    padding: 24px 0;
+    background: linear-gradient(to bottom, rgba(8,7,7,0.95) 0%, transparent 100%);
+    transition: background 0.4s, padding 0.4s, border-bottom 0.4s;
+  }
+  nav.scrolled {
+    padding: 16px 0;
+    background: var(--glass);
+    border-bottom: 1px solid var(--border-soft);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 24px;
+    letter-spacing: 0.08em;
+    color: var(--bone);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-logo span { color: var(--red-glow); }
+  .nav-logo:hover { color: var(--warm-white); }
+  
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 1px;
+    background: var(--red-glow);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s cubic-bezier(0.22,1,0.36,1);
+  }
+  .nav-links a:hover { color: var(--bone); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  
+  .nav-cta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--bone);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 10px 24px;
+    transition: all 0.3s;
+    background: transparent;
+  }
+  .nav-cta:hover {
+    background: var(--crimson);
+    border-color: var(--crimson);
+    color: var(--warm-white);
+  }
+
+  /* ===== HERO ===== */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 120px;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 70%, rgba(74,12,12,0.25) 0%, transparent 70%),
+      linear-gradient(to bottom, rgba(8,7,7,0.2) 0%, rgba(8,7,7,0.8) 75%, var(--black) 100%),
+      var(--graphite);
+  }
+  .hero-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(234,228,219,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(234,228,219,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.5) 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.5) 70%, transparent 100%);
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    right: 15%;
+    top: 15%;
+    width: 1px;
+    height: 50%;
+    background: linear-gradient(to bottom, transparent, var(--crimson), var(--oxblood), transparent);
+    box-shadow: 0 0 30px rgba(179,45,32,0.3);
+    opacity: 0.6;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red-glow);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(64px, 10vw, 110px);
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+    color: var(--bone);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.35s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  .hero-title .red { color: var(--red-glow); animation: glowPulse 4s 1.5s ease-in-out infinite; }
+  
+  .hero-subtitle {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(20px, 2.2vw, 28px);
+    font-weight: 300;
+    color: var(--muted);
+    margin-top: 16px;
+    margin-bottom: 48px;
+    max-width: 500px;
+    line-height: 1.5;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.5s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.65s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  .btn-primary {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm-white);
+    background: var(--crimson);
+    border: 1px solid var(--crimson);
+    padding: 16px 36px;
+    text-decoration: none;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--red-glow);
+    transform: translateX(-100%);
+    transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+  }
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary span { position: relative; z-index: 1; }
+  
+  .btn-ghost {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(163,153,148,0.3);
+    padding-bottom: 4px;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .btn-ghost:hover { color: var(--bone); border-color: var(--bone); }
+  
+  .hero-meta {
+    position: absolute;
+    bottom: 48px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.8s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  .hero-meta span {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0.8;
+  }
+  .hero-meta .open {
+    font-weight: 500;
+    color: var(--red-glow);
+    opacity: 1;
+  }
+
+  /* ===== SECTION SPACING ===== */
+  section { padding: 120px 0; }
+  section + section { padding-top: 0; }
+
+  /* ===== STUDIO INTRO ===== */
+  #intro {
+    padding: 120px 0;
+    border-top: 1px solid var(--border-soft);
+  }
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .intro-text h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(38px, 5vw, 56px);
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    color: var(--bone);
+    margin-bottom: 32px;
+  }
+  .intro-text p {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  .intro-text p strong { color: var(--bone); font-weight: 400; }
+  
+  .intro-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border-soft);
+  }
+  .stat-block {
+    background: var(--graphite);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s;
+  }
+  .stat-block::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, var(--crimson), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  .stat-block:hover { background: var(--smoke); }
+  .stat-block:hover::before { transform: scaleX(1); }
+  
+  .stat-num {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 52px;
+    letter-spacing: 0.02em;
+    color: var(--red-glow);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ===== ARTISTS ===== */
+  #artists {
+    padding: 120px 0;
+    background: var(--charcoal);
+    border-top: 1px solid var(--border-soft);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .section-header {
+    margin-bottom: 72px;
+  }
+  .section-header h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(38px, 5vw, 56px);
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    color: var(--bone);
+  }
+  .artists-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border-soft);
+  }
+  .artist-card {
+    background: var(--graphite);
+    padding: 56px 40px;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: background 0.4s;
+  }
+  .artist-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 1px;
+    background: linear-gradient(to right, transparent, var(--crimson), transparent);
+    transform: scaleX(0);
+    transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+  }
+  .artist-card:hover { background: var(--smoke); }
+  .artist-card:hover::after { transform: scaleX(1); }
+  
+  .artist-number {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 28px;
+    display: block;
+    opacity: 0.8;
+  }
+  .artist-name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 40px;
+    letter-spacing: 0.04em;
+    color: var(--bone);
+    line-height: 1.1;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .artist-handle {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--red-glow);
+    margin-bottom: 32px;
+  }
+  .artist-styles {
+    list-style: none;
+    margin-bottom: 32px;
+  }
+  .artist-styles li {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(234,228,219,0.03);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .artist-styles li::before {
+    content: '—';
+    color: var(--crimson);
+    font-size: 12px;
+  }
+  .artist-bio {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 36px;
+  }
+  .artist-link {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--bone);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s;
+  }
+  .artist-link::after {
+    content: '→';
+    transition: transform 0.3s;
+  }
+  .artist-link:hover { color: var(--red-glow); }
+  .artist-link:hover::after { transform: translateX(6px); }
+
+  /* ===== STYLES / SERVICES ===== */
+  #styles {
+    padding: 120px 0;
+  }
+  .styles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border-soft);
+    margin-top: 56px;
+  }
+  .style-item {
+    background: var(--black);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s;
+  }
+  .style-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: var(--crimson);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  .style-item:hover { background: var(--charcoal); }
+  .style-item:hover::before { transform: scaleY(1); }
+  
+  .style-icon {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(to right, var(--crimson), transparent);
+    margin-bottom: 28px;
+  }
+  .style-name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 28px;
+    letter-spacing: 0.04em;
+    color: var(--bone);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .style-desc {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  /* ===== GALLERY STRIP ===== */
+  #gallery {
+    padding: 100px 0;
+    background: var(--charcoal);
+    border-top: 1px solid var(--border-soft);
+    border-bottom: 1px solid var(--border-soft);
+    overflow: hidden;
+  }
+  .gallery-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 48px;
+  }
+  .gallery-placeholder-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2px;
+  }
+  .gallery-placeholder {
+    aspect-ratio: 3/4;
+    background: var(--graphite);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  .gallery-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(74,12,12,0.4), transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .gallery-placeholder:hover { transform: scale(1.02); z-index: 2; }
+  .gallery-placeholder:hover::before { opacity: 1; }
+  
+  /* Varied heights for architectural feel */
+  .gallery-placeholder:nth-child(2),
+  .gallery-placeholder:nth-child(5) { aspect-ratio: 3/5; }
+
+  /* ===== WALK-INS / BOOKING ===== */
+  #booking {
+    padding: 120px 0;
+  }
+  .booking-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border-soft);
+    margin-top: 56px;
+  }
+  .booking-panel {
+    background: var(--graphite);
+    padding: 72px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .booking-panel.featured {
+    background: var(--smoke);
+  }
+  .booking-panel h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 40px;
+    letter-spacing: 0.04em;
+    color: var(--bone);
+    margin-bottom: 16px;
+    margin-top: 20px;
+    text-transform: uppercase;
+  }
+  .booking-panel p {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+  .booking-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .booking-detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .booking-detail-item .bd-label {
+    color: var(--red-glow);
+    min-width: 88px;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding-top: 2px;
+  }
+  .booking-accent {
+    position: absolute;
+    top: 0; right: 0;
+    width: 140px; height: 140px;
+    background: radial-gradient(circle at top right, rgba(139,26,26,0.15), transparent 70%);
+  }
+
+  /* ===== FAQ ===== */
+  #faq {
+    padding: 120px 0;
+    background: var(--charcoal);
+    border-top: 1px solid var(--border-soft);
+  }
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border-soft);
+    margin-top: 56px;
+  }
+  .faq-item {
+    background: var(--charcoal);
+    padding: 48px 40px;
+    border-bottom: none;
+    position: relative;
+    transition: background 0.4s;
+  }
+  .faq-item:hover { background: var(--graphite); }
+  .faq-q {
+    font-family: var(--font-serif);
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--bone);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .faq-a {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+  .faq-a a { color: var(--red-glow); text-decoration: none; transition: color 0.3s; }
+  .faq-a a:hover { color: var(--ember); }
+  .faq-num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: var(--oxblood);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border-soft);
+    padding: 80px 0 48px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 64px;
+    margin-bottom: 80px;
+  }
+  .footer-brand h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 28px;
+    letter-spacing: 0.08em;
+    color: var(--bone);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .footer-brand h3 span { color: var(--red-glow); }
+  .footer-brand p {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+  .footer-brand address {
+    font-style: normal;
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+  .footer-col h4 {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--red-glow);
+    margin-bottom: 24px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li {
+    margin-bottom: 12px;
+  }
+  .footer-col ul li a {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-col ul li a:hover { color: var(--bone); }
+  
+  .footer-hours p {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+  .footer-hours .open-late {
+    color: var(--red-glow);
+    font-weight: 500;
+  }
+  .footer-bottom {
+    border-top: 1px solid var(--border-soft);
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-bottom p {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    opacity: 0.6;
+  }
+
+  /* ===== FLOATING PHONE BAR (MOBILE FEEL) ===== */
+  .phone-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 400;
+    background: var(--glass);
+    border-top: 1px solid var(--border-soft);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transform: translateY(100%);
+    transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+  }
+  .phone-bar.visible { transform: translateY(0); }
+  .phone-bar a {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--bone);
+    text-decoration: none;
+    padding: 10px 24px;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+  }
+  .phone-bar a.primary {
+    background: var(--crimson);
+    border-color: var(--crimson);
+  }
+  .phone-bar a:hover { border-color: var(--red-glow); color: var(--red-glow); }
+  .phone-bar a.primary:hover { background: var(--red-glow); border-color: var(--red-glow); color: var(--warm-white); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .intro-grid,
+    .booking-grid,
+    .footer-grid { grid-template-columns: 1fr; gap: 1px; }
+    .artists-grid,
+    .styles-grid,
+    .faq-grid { grid-template-columns: 1fr; }
+    .gallery-placeholder-grid { grid-template-columns: repeat(3,1fr); }
+    .nav-links { display: none; }
+    .hero-meta { display: none; }
+    .intro-stats { grid-template-columns: 1fr 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 48px; }
+    .hero-title { font-size: 14vw; }
+  }
+  @media (max-width: 600px) {
+    .container { padding: 0 24px; }
+    .stat-block { padding: 32px 24px; }
+    .artist-card, .style-item, .faq-item, .booking-panel { padding: 40px 24px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+    .phone-bar { padding: 12px; gap: 12px; }
+    .phone-bar a { padding: 10px 16px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="main-nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo"><span>RED</span> LIGHT</a>
+      <ul class="nav-links">
+        <li><a href="#artists">Artists</a></li>
+        <li><a href="#styles">Styles</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a href="tel:7373352261" class="nav-cta">Call to Book</a>
+    </div>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="container" style="position:relative; z-index:2; width:100%;">
+    <div class="hero-content">
+      <p class="hero-eyebrow">San Marcos, Texas — 109 E. Hopkins St.</p>
+      <h1 class="hero-title">
+        <span class="red">Red</span><br>Light<br>Tattoo
+      </h1>
+      <p class="hero-subtitle">Downtown San Marcos. Open late.<br>Walk-ins welcome. Appointments recommended.</p>
+      <div class="hero-actions">
+        <a href="https://bookedin.com/book/redlightattoostudio" target="_blank" rel="noopener" class="btn-primary"><span>Book an Appointment</span></a>
+        <a href="tel:7373352261" class="btn-ghost">(737) 335-2261</a>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <span class="open">Open Late ·</span>
+      <span>Walk-ins Welcome</span>
+      <span>Suite 206, Spot on the Square</span>
+    </div>
+  </div>
+</section>
+
+<section id="intro">
+  <div class="container">
+    <div class="intro-grid">
+      <div class="intro-text reveal">
+        <p class="label">The Studio</p>
+        <div class="divider"></div>
+        <h2>CUSTOM WORK.<br>RESIDENT ARTISTS.<br>REAL CRAFT.</h2>
+        <p>Red Light is a custom tattoo studio located on the Spot on the Square in downtown San Marcos. A dedicated space for working artists and serious craft.</p>
+        <p>Every piece here begins with a conversation. <strong>Whether you're walking in for something small or sitting for a full sleeve, our focus is on precision, respect, and permanence.</strong></p>
+        <p>Our studio operates with the discipline of a professional environment and the range of a genuine art practice. We keep the doors open late, mirroring the energy of the city.</p>
+      </div>
+      <div class="intro-stats reveal">
+        <div class="stat-block">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Resident Artists</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num">6+</div>
+          <div class="stat-label">Styles Offered</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num">DT</div>
+          <div class="stat-label">San Marcos, TX</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">Open Late</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="artists">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label">Who We Are</p>
+      <div class="divider"></div>
+      <h2>THE ARTISTS</h2>
+    </div>
+    <div class="artists-grid">
+
+      <div class="artist-card reveal">
+        <span class="artist-number">01 / Resident Artist</span>
+        <div class="artist-name">BANKS</div>
+        <div class="artist-handle">@banks_tattoo</div>
+        <ul class="artist-styles">
+          <li>Black &amp; Gray Realism</li>
+          <li>Fine Line</li>
+          <li>Portraiture</li>
+          <li>Geometric Detail</li>
+        </ul>
+        <p class="artist-bio">
+          A controlled, high-contrast approach to black and gray work. Clean lines, deliberate shading, and precision in every shadow. 
+        </p>
+        <a href="https://instagram.com/banks_tattoo" target="_blank" rel="noopener" class="artist-link">View Portfolio</a>
+      </div>
+
+      <div class="artist-card reveal">
+        <span class="artist-number">02 / Resident Artist</span>
+        <div class="artist-name">ABEL APPLE</div>
+        <div class="artist-handle">@tattoosbyabelapple</div>
+        <ul class="artist-styles">
+          <li>Vibrant Color</li>
+          <li>Neo-Traditional</li>
+          <li>Illustrative</li>
+          <li>Bold Saturated Work</li>
+        </ul>
+        <p class="artist-bio">
+          Vivid color and illustrative range. Saturated, bold work designed to heal bright and hold its clarity for years to come.
+        </p>
+        <a href="https://instagram.com/tattoosbyabelapple" target="_blank" rel="noopener" class="artist-link">View Portfolio</a>
+      </div>
+
+      <div class="artist-card reveal">
+        <span class="artist-number">03 / Resident Artist</span>
+        <div class="artist-name">ROY THE<br>TATTOOER</div>
+        <div class="artist-handle">@roythetattooer</div>
+        <ul class="artist-styles">
+          <li>Bold Blackwork</li>
+          <li>Dark Imagery</li>
+          <li>Custom Flash</li>
+          <li>Large-Scale Work</li>
+        </ul>
+        <p class="artist-bio">
+          Dark, deliberate, and confident in scale. Heavy blacks and bold compositions built for impact and longevity.
+        </p>
+        <a href="#booking" class="artist-link">Book with Roy</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="styles">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label">What We Do</p>
+      <div class="divider"></div>
+      <h2>STYLES &amp;<br>SPECIALTIES</h2>
+    </div>
+    <div class="styles-grid">
+      <div class="style-item reveal">
+        <div class="style-icon"></div>
+        <div class="style-name">BLACK &amp; GRAY</div>
+        <p class="style-desc">From subtle fine-line to deep photorealistic shading. Precision, smooth gradients, and controlled contrast designed to hold over time.</p>
+      </div>
+      <div class="style-item reveal">
+        <div class="style-icon"></div>
+        <div class="style-name">VIBRANT COLOR</div>
+        <p class="style-desc">Saturated, illustrative, and built to stay bright. Neo-traditional, anime, and custom color work applied with solid fundamentals.</p>
+      </div>
+      <div class="style-item reveal">
+        <div class="style-icon"></div>
+        <div class="style-name">FINE LINE</div>
+        <p class="style-desc">Quiet and precise. Delicate line work with minimal fill — script, botanicals, and geometric forms executed with restraint.</p>
+      </div>
+      <div class="style-item reveal">
+        <div class="style-icon"></div>
+        <div class="style-name">BOLD BLACKWORK</div>
+        <p class="style-desc">High-impact. Heavy blacks, graphic forms, and negative space handled with intention. Designed to read clearly from across a room.</p>
+      </div>
+      <div class="style-item reveal">
+        <div class="style-icon"></div>
+        <div class="style-name">GEOMETRIC</div>
+        <p class="style-desc">Structured, architectural, and optically satisfying. Symmetry, mandala work, and sacred geometry lined with mechanical discipline.</p>
+      </div>
+      <div class="style-item reveal">
+        <div class="style-icon"></div>
+        <div class="style-name">CUSTOM FLASH</div>
+        <p class="style-desc">Walk in, pick from the wall, walk out with a solid piece. Original artist-drawn sheets available on walk-in days — no appointment needed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="container">
+    <div class="gallery-label-row">
+      <div class="reveal">
+        <p class="label">The Work</p>
+        <div class="divider" style="margin-bottom:0;"></div>
+      </div>
+      <a href="https://instagram.com/redlightattoostudio" target="_blank" rel="noopener" style="font-family:var(--font-mono);font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--bone)'" onmouseout="this.style.color='var(--muted)'">Full Gallery @redlightattoostudio →</a>
+    </div>
+    <div class="gallery-placeholder-grid">
+      <div class="gallery-placeholder"></div>
+      <div class="gallery-placeholder"></div>
+      <div class="gallery-placeholder"></div>
+      <div class="gallery-placeholder"></div>
+      <div class="gallery-placeholder"></div>
+      <div class="gallery-placeholder"></div>
+    </div>
+  </div>
+</section>
+
+<section id="booking">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label">Come In</p>
+      <div class="divider"></div>
+      <h2>WALK-INS &amp;<br>APPOINTMENTS</h2>
+    </div>
+    <div class="booking-grid">
+      <div class="booking-panel reveal">
+        <div class="booking-accent"></div>
+        <span class="label">Walk-Ins</span>
+        <h3>COME AS YOU ARE</h3>
+        <p>Walk-ins are welcome when artists have availability. We are open late, but flash and smaller custom work fills fast. Come in, check the books, and we'll get you sorted.</p>
+        <div class="booking-detail">
+          <div class="booking-detail-item">
+            <span class="bd-label">Hours</span>
+            <span>Open Late — check <a href="https://instagram.com/redlightattoostudio" target="_blank" rel="noopener" style="color:var(--red-glow);text-decoration:none;">@redlightattoostudio</a> for daily availability</span>
+          </div>
+          <div class="booking-detail-item">
+            <span class="bd-label">Location</span>
+            <span>109 E. Hopkins St., Suite 206<br>San Marcos, TX 78666</span>
+          </div>
+          <div class="booking-detail-item">
+            <span class="bd-label">Phone</span>
+            <span><a href="tel:7373352261" style="color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--bone)'" onmouseout="this.style.color='var(--muted)'">(737) 335-2261</a></span>
+          </div>
+        </div>
+        <a href="tel:7373352261" class="btn-primary"><span>Call the Shop</span></a>
+      </div>
+
+      <div class="booking-panel featured reveal">
+        <div class="booking-accent"></div>
+        <span class="label">Appointments</span>
+        <h3>BOOK YOUR ARTIST</h3>
+        <p>For custom work, larger pieces, or specific artist requests, book ahead. A consultation establishes the design, and a deposit holds your time. We will review references and schedule your session.</p>
+        <div class="booking-detail">
+          <div class="booking-detail-item">
+            <span class="bd-label">Online</span>
+            <span>Secure your spot at <a href="https://bookedin.com/book/redlightattoostudio" target="_blank" rel="noopener" style="color:var(--red-glow);text-decoration:none;">bookedin.com</a></span>
+          </div>
+          <div class="booking-detail-item">
+            <span class="bd-label">Instagram</span>
+            <span>Message <a href="https://instagram.com/redlightattoostudio" target="_blank" rel="noopener" style="color:var(--red-glow);text-decoration:none;">@redlightattoostudio</a> with references and placement</span>
+          </div>
+          <div class="booking-detail-item">
+            <span class="bd-label">Deposit</span>
+            <span>Required to hold appointment — applied directly to your session cost</span>
+          </div>
+        </div>
+        <a href="https://bookedin.com/book/redlightattoostudio" target="_blank" rel="noopener" class="btn-primary"><span>Book Online</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label">Answers</p>
+      <div class="divider"></div>
+      <h2>COMMON<br>QUESTIONS</h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item reveal">
+        <span class="faq-num">01</span>
+        <p class="faq-q">Do you accept walk-ins?</p>
+        <p class="faq-a">Yes. Walk-ins are welcome based on artist availability. Smaller work and flash are most likely to be accommodated same-day.</p>
+      </div>
+      <div class="faq-item reveal">
+        <span class="faq-num">02</span>
+        <p class="faq-q">How do I book an appointment?</p>
+        <p class="faq-a">Book online through our <a href="https://bookedin.com/book/redlightattoostudio" target="_blank" rel="noopener">booking portal</a>, call the studio at <a href="tel:7373352261">(737) 335-2261</a>, or direct message us on Instagram <a href="https://instagram.com/redlightattoostudio" target="_blank" rel="noopener">@redlightattoostudio</a>. Include your idea, placement, and size.</p>
+      </div>
+      <div class="faq-item reveal">
+        <span class="faq-num">03</span>
+        <p class="faq-q">Is a deposit required?</p>
+        <p class="faq-a">Yes, a deposit is required to secure an appointment. It is applied to the final cost of your session and is non-refundable for no-shows or late cancellations.</p>
+      </div>
+      <div class="faq-item reveal">
+        <span class="faq-num">04</span>
+        <p class="faq-q">Can I request a specific artist?</p>
+        <p class="faq-a">Absolutely. Each artist maintains a distinct style and focus. We recommend reviewing their portfolios before booking to align your concept with the right execution.</p>
+      </div>
+      <div class="faq-item reveal">
+        <span class="faq-num">05</span>
+        <p class="faq-q">How should I prepare for my session?</p>
+        <p class="faq-a">Eat a substantial meal beforehand, hydrate, and wear comfortable clothing that provides easy access to the placement area. Arrive rested and on time.</p>
+      </div>
+      <div class="faq-item reveal">
+        <span class="faq-num">06</span>
+        <p class="faq-q">What are your aftercare instructions?</p>
+        <p class="faq-a">Your artist will provide precise aftercare instructions upon completion of your piece. Follow their guidance strictly, as methods vary based on application technique and skin type.</p>
+      </div>
+      <div class="faq-item reveal">
+        <span class="faq-num">07</span>
+        <p class="faq-q">Where is the studio located?</p>
+        <p class="faq-a">We are located at 109 E. Hopkins St., Suite 206, in the Spot on the Square building in downtown San Marcos. Street parking and nearby lots are available.</p>
+      </div>
+      <div class="faq-item reveal">
+        <span class="faq-num">08</span>
+        <p class="faq-q">What are your operating hours?</p>
+        <p class="faq-a">We run late. For exact daily hours, check our Instagram <a href="https://instagram.com/redlightattoostudio" target="_blank" rel="noopener">@redlightattoostudio</a> or call the shop at <a href="tel:7373352261">(737) 335-2261</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3><span>RED</span> LIGHT</h3>
+        <p>Tattoo Studio · San Marcos, TX</p>
+        <address>
+          109 E. Hopkins St., Suite 206<br>
+          San Marcos, TX 78666<br>
+          <a href="tel:7373352261" style="color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--bone)'" onmouseout="this.style.color='var(--muted)'">(737) 335-2261</a>
+        </address>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#artists">Artists</a></li>
+          <li><a href="#styles">Styles</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#booking">Booking</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:7373352261">(737) 335-2261</a></li>
+          <li><a href="https://instagram.com/redlightattoostudio" target="_blank" rel="noopener">@redlightattoostudio</a></li>
+          <li><a href="https://bookedin.com/book/redlightattoostudio" target="_blank" rel="noopener">Book Online</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-hours">
+        <h4>Hours</h4>
+        <p class="open-late">Open Late</p>
+        <p>Walk-ins Welcome<br>Appointments Recommended</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Red Light Tattoo Studio · San Marcos, TX · All Rights Reserved</p>
+      <p>Must be 18+ for tattoos. Valid ID required.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="phone-bar" id="phone-bar">
+  <a href="tel:7373352261">(737) 335-2261</a>
+  <a href="https://bookedin.com/book/redlightattoostudio" target="_blank" rel="noopener" class="primary">Book Now</a>
+  <a href="https://instagram.com/redlightattoostudio" target="_blank" rel="noopener">@redlight</a>
+</div>
+
+<script>
+  // Nav scroll state
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        // Stagger siblings
+        const siblings = Array.from(entry.target.parentElement.querySelectorAll('.reveal'));
+        const idx = siblings.indexOf(entry.target);
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, idx * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Phone bar — shows after hero
+  const phoneBar = document.getElementById('phone-bar');
+  const heroEl = document.getElementById('hero');
+  const heroObserver = new IntersectionObserver((entries) => {
+    phoneBar.classList.toggle('visible', !entries[0].isIntersecting);
+  }, { threshold: 0.1 });
+  heroObserver.observe(heroEl);
+</script>
+</body>
+</html>
